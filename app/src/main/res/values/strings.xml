@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="time_s">\u0020 time(s) \u0020</string>
+    <string name="per">per\u0020</string>
+    <string name="day_s">\u0020 day(s)</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5523E3</color>
+    <color name="colorPrimaryDark">#441cb5</color>
+    <color name="purpleBtn">#5523E3</color>
+    <color name="BtnOn">#5523E3</color>
+    <color name="BtnOff">#825dea</color>
+
+</resources>
+
