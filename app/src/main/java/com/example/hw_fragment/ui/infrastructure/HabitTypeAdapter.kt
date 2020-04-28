@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.hw_fragment.internal.HabitType
 import com.example.hw_fragment.ui.main.HabitListFragment
 
-class HabitTypeAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+class HabitTypeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private val tabNumber = 2
 
@@ -16,9 +16,11 @@ class HabitTypeAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> HabitListFragment.newInstance(
-                HabitType.BAD)
+                HabitType.BAD
+            )
             else -> HabitListFragment.newInstance(
-                HabitType.GOOD)
+                HabitType.GOOD
+            )
         }
     }
 }

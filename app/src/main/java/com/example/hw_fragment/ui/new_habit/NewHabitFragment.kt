@@ -7,15 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.hw_fragment.internal.Habit
 import com.example.hw_fragment.internal.HabitType
 import com.example.hw_fragment.R
-import com.example.hw_fragment.internal.Storage
+import com.example.hw_fragment.db.Habit
 import kotlinx.android.synthetic.main.new_habit_fragment.*
 import java.util.*
 
@@ -23,10 +23,10 @@ import java.util.*
 class NewHabitFragment : Fragment() {
 
     companion object {
-        const val INDEX = "INDEX"
+        private const val INDEX = "INDEX"
     }
 
-    lateinit var newHabitViewModel: NewHabitViewModel
+    private lateinit var newHabitViewModel: NewHabitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,43 +39,54 @@ class NewHabitFragment : Fragment() {
         }).get(NewHabitViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.new_habit_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        name.hint = "Habit " + Storage.curIndex.toString()
-        name.text = SpannableStringBuilder( "Habit " + Storage.curIndex.toString())
-        var index : Int? = null
+        name.hint = view.context.getString(R.string.habit)
+        name.text =
+            SpannableStringBuilder(view.context.getString(R.string.habit))
+
         if (requireArguments().containsKey(INDEX)) {
-            index = requireArguments().getInt(INDEX)
-            val editedHabit = Storage.get(index)
 
             newHabitViewModel.habit.observe(viewLifecycleOwner, Observer { habit ->
-                habit?.let { fillEditedHabitFields(editedHabit) }
+                habit?.let { fillEditedHabitFields(habit) }
             })
         }
+
+        priority.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                // Display the current progress of SeekBar
+                priority_text.text = "$i"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
 
         add.setOnClickListener { _: View ->
             if (!isFilled()) {
                 val toast = Toast.makeText(
                     activity?.applicationContext,
-                    "Fill all params",
+                    view.context.getString(R.string.fill_all_params),
                     Toast.LENGTH_SHORT
                 )
                 toast.setGravity(Gravity.BOTTOM, 0, 0)
                 toast.show()
                 return@setOnClickListener
             }
-            newHabitViewModel.save(createHabit(index))
+            newHabitViewModel.save(createHabit())
             view.findNavController().navigateUp()
         }
     }
 
-    private fun isFilled() : Boolean {
+    private fun isFilled(): Boolean {
         return !(name.text.toString().isEmpty() ||
                 periodicity.text.toString().isEmpty() ||
                 quantity.text.toString().isEmpty() ||
@@ -93,9 +104,8 @@ class NewHabitFragment : Fragment() {
         }
     }
 
-    private fun createHabit(index: Int?): Habit {
+    private fun createHabit(): Habit {
         return Habit(
-            index,
             name.text.toString(),
             description.text.toString(),
             priority.progress,
