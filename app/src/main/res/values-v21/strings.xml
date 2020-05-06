@@ -15,9 +15,9 @@
     <string name="good">good</string>
     <string name="periodicity_title">Periodicity</string>
     <string name="periodicity_question">How often do you do this?</string>
-    <string name="day_s"> day(s) </string>
+    <string name="day_s">" day(s) "</string>
     <string name="quantity_title">Quantity</string>
     <string name="quantity_question">How many times?</string>
-    <string name="time_s"> time(s) </string>
+    <string name="time_s">" time(s) "</string>
     <string name="add">add</string>
 </resources>

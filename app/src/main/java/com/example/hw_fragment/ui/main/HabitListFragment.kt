@@ -18,25 +18,27 @@ import kotlinx.android.synthetic.main.habit_list.*
 
 class HabitListFragment : Fragment() {
 
-    val viewModel: HabitListViewModel by activityViewModels()
+    private val viewModel: HabitListViewModel by activityViewModels()
     private var habitType = HabitType.BAD
 
     companion object {
-        const val TYPE = "TYPE"
-        const val INDEX = "INDEX"
+        private const val TYPE = "TYPE"
+        private const val INDEX = "INDEX"
 
         fun newInstance(habitType: HabitType): HabitListFragment {
 
             return HabitListFragment().apply {
-                arguments = Bundle().apply{
+                arguments = Bundle().apply {
                     putSerializable(TYPE, habitType)
                 }
             }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.habit_list, container, false)
     }
 
@@ -55,7 +57,10 @@ class HabitListFragment : Fragment() {
         }
 
         habit_recycler_view.layoutManager = LinearLayoutManager(context)
-        habit_recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(habit_recycler_view.context, R.anim.layout_animation_waterfall)
+        habit_recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(
+            habit_recycler_view.context,
+            R.anim.layout_animation_waterfall
+        )
 
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
             (habit_recycler_view.adapter as HabitListAdapter).update(when (habitType) {

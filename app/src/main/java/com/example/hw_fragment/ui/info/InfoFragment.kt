@@ -9,6 +9,11 @@ import com.example.hw_fragment.R.layout
 
 
 class InfoFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(
-        layout.info_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(
+        layout.info_fragment, container, false
+    )
 }

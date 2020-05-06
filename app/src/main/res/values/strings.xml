@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search">Search</string>
-    <string name="time_s">\u0020 time(s) \u0020</string>
-    <string name="per">per\u0020</string>
-    <string name="day_s">\u0020 day(s)</string>
+    <string name="time_s">" time(s) "\u0020</string>
+    <string name="per">" per "</string>
+    <string name="day_s">" day(s)"</string>
+    <string name="new_habit">New Habit</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+    <string name="priority_">"Priority: "</string>
+    <string name="habit">"Habit"</string>
+    <string name="fill_all_params">"Fill all params"</string>
+    <string name="_priority_value">"0"</string>
 </resources>

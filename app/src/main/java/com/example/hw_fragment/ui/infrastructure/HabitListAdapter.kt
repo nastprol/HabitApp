@@ -1,5 +1,6 @@
 package com.example.hw_fragment.ui.infrastructure
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,13 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hw_fragment.R
-import com.example.hw_fragment.internal.Habit
+import com.example.hw_fragment.db.Habit
 import com.example.hw_fragment.internal.HabitType
 
-class HabitListAdapter(var habits: List<Habit>, val clickListener: (Habit) -> Unit) :
+class HabitListAdapter(
+    var habits: List<Habit>,
+    private val clickListener: (Habit) -> Unit
+) :
     RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,7 +27,7 @@ class HabitListAdapter(var habits: List<Habit>, val clickListener: (Habit) -> Un
         )
     }
 
-    fun update(newHabits: List<Habit>){
+    fun update(newHabits: List<Habit>) {
         habits = newHabits
     }
 
@@ -38,10 +42,11 @@ class HabitListAdapter(var habits: List<Habit>, val clickListener: (Habit) -> Un
 
 
 class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    @SuppressLint("SetTextI18n")
     fun bind(habit: Habit, clickListener: (Habit) -> Unit) {
         habitTitle.text = habit.name
         habitDescription.text = habit.description
-        habitPriority.text = "Priority: " + habit.priority.toString()
+        habitPriority.text = view.context.getString(R.string.priority_) + habit.priority.toString()
         habitPeriod.text = habit.periodicity.toString()
         habitQuantity.text = habit.quantity.toString()
 
@@ -54,9 +59,9 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         view.setOnClickListener { clickListener(habit) }
     }
 
-    val habitTitle = view.findViewById(R.id.habitTitle) as TextView
-    val habitDescription = view.findViewById(R.id.descriptionText) as TextView
-    val habitPriority = view.findViewById(R.id.stars) as TextView
-    val habitPeriod = view.findViewById(R.id.habitPeriod) as TextView
-    val habitQuantity = view.findViewById(R.id.habitQuantity) as TextView
+    private val habitTitle = view.findViewById(R.id.habitTitle) as TextView
+    private val habitDescription = view.findViewById(R.id.descriptionText) as TextView
+    private val habitPriority = view.findViewById(R.id.stars) as TextView
+    private val habitPeriod = view.findViewById(R.id.habitPeriod) as TextView
+    private val habitQuantity = view.findViewById(R.id.habitQuantity) as TextView
 }
