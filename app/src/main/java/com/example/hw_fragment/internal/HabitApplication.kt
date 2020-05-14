@@ -18,7 +18,6 @@ class HabitApplication : Application() {
                 applicationContext,
                 AppDatabase::class.java, "HabitDataBase"
             )
-            .allowMainThreadQueries()
             .build()
     }
 }
